@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "outDir": "build",
+    "target": "es2020",
+    "isolatedModules": false,
+    "noEmit": false,
+    "sourceMap": false,
+    "removeComments": true,
+    "declaration": false
+  },
+  "include": ["server"],
+  "exclude": ["node_modules", "build", ".next"]
+}

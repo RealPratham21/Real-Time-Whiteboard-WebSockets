@@ -1,0 +1,14 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+healthcheckPath = "/health"
+healthcheckTimeout = 300
+restartPolicyType = "always"
+numReplicas = 1
+
+[environments.production]
+variables = { NODE_ENV = "production" }
+
+[environments.development]
+variables = { NODE_ENV = "development" }
