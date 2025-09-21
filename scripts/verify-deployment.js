@@ -8,13 +8,23 @@ const nextBuildPath = path.join(process.cwd(), '.next');
 if (fs.existsSync(nextBuildPath)) {
   console.log('✅ .next directory exists');
   
+  // List contents of .next directory
+  const nextContents = fs.readdirSync(nextBuildPath);
+  console.log(`📁 .next contents: ${nextContents.join(', ')}`);
+  
   const serverPath = path.join(nextBuildPath, 'server');
   if (fs.existsSync(serverPath)) {
     console.log('✅ .next/server directory exists');
     
+    const serverContents = fs.readdirSync(serverPath);
+    console.log(`📁 .next/server contents: ${serverContents.join(', ')}`);
+    
     const pagesPath = path.join(serverPath, 'pages');
     if (fs.existsSync(pagesPath)) {
       console.log('✅ .next/server/pages directory exists');
+      
+      const pagesContents = fs.readdirSync(pagesPath);
+      console.log(`📁 .next/server/pages contents: ${pagesContents.join(', ')}`);
       
       const indexPath = path.join(pagesPath, 'index.js');
       if (fs.existsSync(indexPath)) {
@@ -46,6 +56,7 @@ if (fs.existsSync(packagePath)) {
   const pkg = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
   console.log(`✅ Package: ${pkg.name}@${pkg.version}`);
   console.log(`✅ Start command: ${pkg.scripts.start}`);
+  console.log(`✅ Build command: ${pkg.scripts.build}`);
 } else {
   console.log('❌ package.json missing');
 }

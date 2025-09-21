@@ -9,11 +9,8 @@ import { v4 } from "uuid";
 
 const port = parseInt(process.env.PORT || "3000", 10);
 const dev = process.env.NODE_ENV !== "production";
-const nextApp = next({ 
-  dev,
-  dir: process.cwd(),
-  quiet: false
-});
+
+const nextApp = next({ dev });
 const nextHandler = nextApp.getRequestHandler();
 
 nextApp.prepare().then(async () => {

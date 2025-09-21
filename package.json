@@ -17,7 +17,7 @@
     "prebuild": "node scripts/prebuild.js",
     "build:server": "tsc --project tsconfig.server.json",
     "build:next": "next build",
-    "build": "npm run prebuild && next build && npm run build:server",
+    "build": "node scripts/railway-build.js",
     "postbuild": "node scripts/verify-deployment.js",
     "start": "cross-env NODE_ENV=production node build/index.js",
     "lint": "next lint",

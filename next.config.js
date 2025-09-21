@@ -3,9 +3,9 @@ module.exports = {
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
-  output: 'standalone',
   distDir: '.next',
   generateEtags: false,
+  trailingSlash: false,
   images: {
     domains: [],
     formats: ['image/webp', 'image/avif'],
