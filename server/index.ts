@@ -19,14 +19,15 @@ nextApp.prepare().then(async () => {
   const io = new Server<ClientToServerEvents, ServerToClientEvents>(server, {
     cors: {
       origin: process.env.NODE_ENV === "production" 
-        ? ["https://*.railway.app", "https://*.up.railway.app"] 
+        ? true // Allow all origins in production for Railway
         : ["http://localhost:3000"],
       methods: ["GET", "POST"],
       credentials: true
     },
     transports: ["websocket", "polling"],
     pingTimeout: 60000,
-    pingInterval: 25000
+    pingInterval: 25000,
+    allowEIO3: true
   });
 
   app.get("/health", async (_, res) => {
@@ -62,6 +63,9 @@ nextApp.prepare().then(async () => {
   };
 
   io.on("connection", (socket) => {
+    // eslint-disable-next-line no-console
+    console.log(`🔌 Socket connected: ${socket.id}`);
+
     const getRoomId = () => {
       const joinedRoom = [...socket.rooms].find((room) => room !== socket.id);
 
@@ -83,6 +87,9 @@ nextApp.prepare().then(async () => {
     };
 
     socket.on("create_room", (username) => {
+      // eslint-disable-next-line no-console
+      console.log(`🏠 Creating room for user: ${username}`);
+      
       let roomId: string;
       do {
         roomId = Math.random().toString(36).substring(2, 6);
@@ -96,6 +103,9 @@ nextApp.prepare().then(async () => {
         users: new Map([[socket.id, username]]),
       });
 
+      // eslint-disable-next-line no-console
+      console.log(`✅ Room created: ${roomId}`);
+      
       io.to(socket.id).emit("created", roomId);
     });
 
@@ -180,6 +190,11 @@ nextApp.prepare().then(async () => {
       leaveRoom(roomId, socket.id);
 
       io.to(roomId).emit("user_disconnected", socket.id);
+    });
+
+    socket.on("disconnect", () => {
+      // eslint-disable-next-line no-console
+      console.log(`🔌 Socket disconnected: ${socket.id}`);
     });
   });
 

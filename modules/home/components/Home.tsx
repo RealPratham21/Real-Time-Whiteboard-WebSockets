@@ -50,13 +50,27 @@ const Home = () => {
   }, [setAtomRoomId]);
 
   const handleCreateRoom = () => {
+    if (!username.trim()) {
+      alert("Please enter your name first!");
+      return;
+    }
+    console.log("Creating room for:", username);
     socket.emit("create_room", username);
   };
 
   const handleJoinRoom = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (roomId) socket.emit("join_room", roomId, username);
+    if (!username.trim()) {
+      alert("Please enter your name first!");
+      return;
+    }
+    if (!roomId.trim()) {
+      alert("Please enter a room ID!");
+      return;
+    }
+    console.log("Joining room:", roomId, "as:", username);
+    socket.emit("join_room", roomId, username);
   };
 
   return (

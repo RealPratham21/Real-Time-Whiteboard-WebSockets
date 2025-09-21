@@ -18,14 +18,15 @@ nextApp.prepare().then(async () => {
     const io = new socket_io_1.Server(server, {
         cors: {
             origin: process.env.NODE_ENV === "production"
-                ? ["https://*.railway.app", "https://*.up.railway.app"]
+                ? true
                 : ["http://localhost:3000"],
             methods: ["GET", "POST"],
             credentials: true
         },
         transports: ["websocket", "polling"],
         pingTimeout: 60000,
-        pingInterval: 25000
+        pingInterval: 25000,
+        allowEIO3: true
     });
     app.get("/health", async (_, res) => {
         res.status(200).json({
@@ -52,6 +53,7 @@ nextApp.prepare().then(async () => {
         room.usersMoves.get(socketId).pop();
     };
     io.on("connection", (socket) => {
+        console.log(`🔌 Socket connected: ${socket.id}`);
         const getRoomId = () => {
             const joinedRoom = [...socket.rooms].find((room) => room !== socket.id);
             if (!joinedRoom)
@@ -69,6 +71,7 @@ nextApp.prepare().then(async () => {
             socket.leave(roomId);
         };
         socket.on("create_room", (username) => {
+            console.log(`🏠 Creating room for user: ${username}`);
             let roomId;
             do {
                 roomId = Math.random().toString(36).substring(2, 6);
@@ -79,6 +82,7 @@ nextApp.prepare().then(async () => {
                 drawed: [],
                 users: new Map([[socket.id, username]]),
             });
+            console.log(`✅ Room created: ${roomId}`);
             io.to(socket.id).emit("created", roomId);
         });
         socket.on("check_room", (roomId) => {
@@ -138,6 +142,9 @@ nextApp.prepare().then(async () => {
             const roomId = getRoomId();
             leaveRoom(roomId, socket.id);
             io.to(roomId).emit("user_disconnected", socket.id);
+        });
+        socket.on("disconnect", () => {
+            console.log(`🔌 Socket disconnected: ${socket.id}`);
         });
     });
     app.all("*", (req, res) => nextHandler(req, res));
