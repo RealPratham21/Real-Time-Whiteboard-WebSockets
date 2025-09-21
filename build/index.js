@@ -10,9 +10,14 @@ const socket_io_1 = require("socket.io");
 const uuid_1 = require("uuid");
 const port = parseInt(process.env.PORT || "3000", 10);
 const dev = process.env.NODE_ENV !== "production";
-const nextApp = (0, next_1.default)({ dev });
+const nextApp = (0, next_1.default)({
+    dev,
+    dir: process.cwd(),
+    quiet: false
+});
 const nextHandler = nextApp.getRequestHandler();
 nextApp.prepare().then(async () => {
+    console.log("✅ Next.js app prepared successfully");
     const app = (0, express_1.default)();
     const server = (0, http_1.createServer)(app);
     const io = new socket_io_1.Server(server, {

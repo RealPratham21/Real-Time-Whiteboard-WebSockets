@@ -9,10 +9,17 @@ import { v4 } from "uuid";
 
 const port = parseInt(process.env.PORT || "3000", 10);
 const dev = process.env.NODE_ENV !== "production";
-const nextApp = next({ dev });
+const nextApp = next({ 
+  dev,
+  dir: process.cwd(),
+  quiet: false
+});
 const nextHandler = nextApp.getRequestHandler();
 
 nextApp.prepare().then(async () => {
+  // eslint-disable-next-line no-console
+  console.log("✅ Next.js app prepared successfully");
+  
   const app = express();
   const server = createServer(app);
 

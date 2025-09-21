@@ -14,14 +14,14 @@
   "scripts": {
     "dev": "nodemon server/index.ts",
     "dev:client": "ts-node server/index.ts",
+    "prebuild": "node scripts/prebuild.js",
     "build:server": "tsc --project tsconfig.server.json",
     "build:next": "next build",
-    "build": "npm run build:server && npm run build:next",
+    "build": "npm run prebuild && next build && npm run build:server",
+    "postbuild": "node scripts/verify-deployment.js",
     "start": "cross-env NODE_ENV=production node build/index.js",
     "lint": "next lint",
-    "type-check": "tsc --noEmit",
-    "railway:build": "npm run build:server && npm run build:next",
-    "postinstall": "npm run build:server"
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "express": "^4.18.2",
