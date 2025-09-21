@@ -17,11 +17,12 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Expose port
-EXPOSE 3000
-
-# Set environment variable
+# Set environment variables
 ENV NODE_ENV=production
+ENV PORT=3000
+
+# Expose port (Railway will override this)
+EXPOSE $PORT
 
 # Start the application
 CMD ["npm", "start"]

@@ -10,6 +10,11 @@ const socket_io_1 = require("socket.io");
 const uuid_1 = require("uuid");
 const port = parseInt(process.env.PORT || "3000", 10);
 const dev = process.env.NODE_ENV !== "production";
+console.log(`🔧 Starting Whizle server...`);
+console.log(`📍 Port: ${port}`);
+console.log(`🏗️  Development mode: ${dev}`);
+console.log(`🌍 NODE_ENV: ${process.env.NODE_ENV}`);
+console.log(`📦 Preparing Next.js app...`);
 const nextApp = (0, next_1.default)({ dev });
 const nextHandler = nextApp.getRequestHandler();
 nextApp.prepare().then(async () => {
@@ -149,9 +154,10 @@ nextApp.prepare().then(async () => {
         });
     });
     app.all("*", (req, res) => nextHandler(req, res));
-    server.listen(port, () => {
-        console.log(`🚀 Whizle server ready on http://localhost:${port}`);
+    server.listen(port, '0.0.0.0', () => {
+        console.log(`🚀 Whizle server ready on http://0.0.0.0:${port}`);
         console.log(`📊 Environment: ${process.env.NODE_ENV || "development"}`);
+        console.log(`🌐 Railway URL: https://real-time-whiteboard-websockets-production.up.railway.app/`);
     });
     const gracefulShutdown = (signal) => {
         console.log(`\n🛑 Received ${signal}. Shutting down gracefully...`);

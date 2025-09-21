@@ -10,6 +10,17 @@ import { v4 } from "uuid";
 const port = parseInt(process.env.PORT || "3000", 10);
 const dev = process.env.NODE_ENV !== "production";
 
+// eslint-disable-next-line no-console
+console.log(`🔧 Starting Whizle server...`);
+// eslint-disable-next-line no-console
+console.log(`📍 Port: ${port}`);
+// eslint-disable-next-line no-console
+console.log(`🏗️  Development mode: ${dev}`);
+// eslint-disable-next-line no-console
+console.log(`🌍 NODE_ENV: ${process.env.NODE_ENV}`);
+// eslint-disable-next-line no-console
+console.log(`📦 Preparing Next.js app...`);
+
 const nextApp = next({ dev });
 const nextHandler = nextApp.getRequestHandler();
 
@@ -204,11 +215,13 @@ nextApp.prepare().then(async () => {
 
   app.all("*", (req, res) => nextHandler(req, res));
 
-  server.listen(port, () => {
+  server.listen(port, '0.0.0.0', () => {
     // eslint-disable-next-line no-console
-    console.log(`🚀 Whizle server ready on http://localhost:${port}`);
+    console.log(`🚀 Whizle server ready on http://0.0.0.0:${port}`);
     // eslint-disable-next-line no-console
     console.log(`📊 Environment: ${process.env.NODE_ENV || "development"}`);
+    // eslint-disable-next-line no-console
+    console.log(`🌐 Railway URL: https://real-time-whiteboard-websockets-production.up.railway.app/`);
   });
 
   // Graceful shutdown
