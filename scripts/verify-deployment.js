@@ -26,11 +26,15 @@ if (fs.existsSync(nextBuildPath)) {
       const pagesContents = fs.readdirSync(pagesPath);
       console.log(`📁 .next/server/pages contents: ${pagesContents.join(', ')}`);
       
-      const indexPath = path.join(pagesPath, 'index.js');
-      if (fs.existsSync(indexPath)) {
+      const indexJsPath = path.join(pagesPath, 'index.js');
+      const indexHtmlPath = path.join(pagesPath, 'index.html');
+      
+      if (fs.existsSync(indexJsPath)) {
         console.log('✅ index.js page exists');
+      } else if (fs.existsSync(indexHtmlPath)) {
+        console.log('✅ index.html page exists (static)');
       } else {
-        console.log('❌ index.js page missing');
+        console.log('❌ index page missing');
       }
     } else {
       console.log('❌ .next/server/pages directory missing');

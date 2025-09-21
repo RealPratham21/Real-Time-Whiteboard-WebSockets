@@ -1,12 +1,10 @@
 [build]
-builder = "nixpacks"
+builder = "dockerfile"
 
 [deploy]
 healthcheckPath = "/health"
 healthcheckTimeout = 300
 restartPolicyType = "always"
-numReplicas = 1
-startCommand = "npm start"
 
 [environments.production]
 variables = { NODE_ENV = "production" }

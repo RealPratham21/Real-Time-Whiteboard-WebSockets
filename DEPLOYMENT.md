@@ -16,10 +16,11 @@ A state-of-the-art real-time collaborative whiteboard application optimized for 
 
 ### ✅ Railway Optimization
 - [x] Created `railway.toml` configuration file
-- [x] Created `nixpacks.toml` for build optimization
-- [x] Added `Procfile` for deployment instructions
+- [x] Created `Dockerfile` for reliable Docker-based deployment
+- [x] Added `.dockerignore` for optimized builds
 - [x] Enhanced `/health` endpoint with detailed monitoring info
 - [x] Configured environment-specific settings
+- [x] Removed problematic nixpacks configuration
 
 ### ✅ Production-Grade Features
 - [x] Optimized Socket.IO configuration for production
@@ -45,10 +46,12 @@ A state-of-the-art real-time collaborative whiteboard application optimized for 
 ### ✅ Railway-Specific Fixes
 - [x] Fixed Next.js standalone output configuration
 - [x] Updated build scripts for proper Railway deployment
-- [x] Added nixpacks configuration for optimal builds
+- [x] Replaced nixpacks with Docker for reliable builds
+- [x] Created optimized Dockerfile with Node.js 18 Alpine
 - [x] Enhanced server configuration for Next.js integration
 - [x] Fixed module resolution issues
 - [x] Added comprehensive deployment verification
+- [x] Resolved Nix package manager conflicts
 
 ### ✅ Documentation & Configuration
 - [x] Updated README with comprehensive Railway deployment instructions
